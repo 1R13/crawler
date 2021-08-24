@@ -41,9 +41,12 @@ while level <= target:
 finished = datetime.datetime.now()
 
 for u in Found:
-    print(u)
+    print("Found :", u)
 
-print(50*"-", "\n", len(Searched), "unique urls searched,", target, "levels searched,", len(Todo) + len(Todo2), "URLs open, took", finished - started)
+for u in Todo2:
+    print("To be searched :", u)
+
+print(75*"-", "\n", len(Searched), "unique urls searched,", len(Found), "urls found,", target, "levels searched,", len(Todo) + len(Todo2), "URLs open, took", finished - started)
 
 # print(hits, "successful search hits.")
 
