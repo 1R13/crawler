@@ -18,12 +18,16 @@ def test():
 session.start()
 session.scrape_loop()
 
-"""for u in session.found_urls:
-    if u.__contains__("google.com"):
-        print(u)
-for u in session.found_urls:
-    if not u.__contains__("google.com"):
-        print(u)
-"""
+for url in session.found_urls:
+    if url.__contains__(session.restrain):
+        print(url)
+for url in session.found_urls:
+    if not url.__contains__(session.restrain):
+        print(url)
+
 for url in session.search_hits:
     print(url)
+
+for url in session.unreachable:
+    print("Couldn't reach :", url)
+

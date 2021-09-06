@@ -8,6 +8,7 @@ class WebScraper:
     def __init__(self, root_url, level: int, restrain: str):
         self.search_hits = []
         self.found_urls = []
+        self.unreachable = []
         self.root_url = root_url
         self.level = level
         self.time_start = datetime.datetime.now()
@@ -56,7 +57,7 @@ class WebScraper:
 
                 try:
                     if line.__contains__(self.search_term) and not self.search_hits.__contains__(self.root_url):
-                        print(line)
+                        # print(line)
                         self.search_hits.append(self.root_url)
                 except TypeError:
                     if False:
@@ -69,28 +70,35 @@ class WebScraper:
         while self.step < self.level:
             for url in self.todo1:
 
-                r = requests.get(url)
-                for line in r.text.splitlines():
+                try:
 
-                    if line.__contains__("http"):
+                    r = requests.get(url)
+                    # print(url)
+                    for line in r.text.splitlines():
 
-                        urls = self.get_urls_from_line(line)
-                        for u in urls:
-                            if not self.found_urls.__contains__(u):
-                                self.found_urls.append(u)
-                                # print(url)
-                                if not self.todo1.__contains__(u) and not self.todo2.__contains__(u) and \
-                                        u.__contains__(self.restrain):
-                                    self.todo2.append(u)
+                        if line.__contains__("http"):
 
-                    try:
-                        if line.__contains__(self.search_term) and not self.search_hits.__contains__(url):
-                            self.search_hits.append(url)
-                            if len(line) < 200:
-                                print(line)
-                    except TypeError:
-                        if False:
-                            print("No search term set.")
+                            urls = self.get_urls_from_line(line)
+                            for u in urls:
+                                if not self.found_urls.__contains__(u):
+                                    self.found_urls.append(u)
+                                    # print(url)
+                                    if not self.todo1.__contains__(u) and not self.todo2.__contains__(u) and \
+                                            u.__contains__(self.restrain):
+                                        self.todo2.append(u)
+
+                        try:
+                            if line.__contains__(self.search_term) and not self.search_hits.__contains__(url):
+                                self.search_hits.append(url)
+                                if len(line) < 200:
+                                    print(line)
+                        except TypeError:
+                            if False:
+                                print("No search term set.")
+                except OSError:
+                    # print("Couldn't reach", url)
+                    self.unreachable.append(url)
+                    self.found_urls.remove(url)
                 self.todo1.remove(url)
             self.todo1 += self.todo2
             self.todo2 = []
