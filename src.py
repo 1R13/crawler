@@ -2,13 +2,14 @@ import requests
 import datetime
 
 
-class WebScraper:
+class WebScraper:   # TODO implement pdf compatibility
 
     # Initializes Session with provided parameters
     def __init__(self, root_url, level: int, restrain: str):
         self.search_hits = []
         self.found_urls = []
         self.unreachable = []
+        self.searched = 0
         self.root_url = root_url
         self.level = level
         self.time_start = datetime.datetime.now()
@@ -32,7 +33,7 @@ class WebScraper:
                 while not "\" <>(){}\'[]*;\\".__contains__(line[e]):
                     e += 1
             except Exception as err:
-                print(err)
+                no_fucks_given = True
             u = line[i:e]
             if not urls.__contains__(u) and not u.__contains__("\/") and not u.__contains__("https?") \
                     and u.__contains__(".") and u.__contains__("://"):
@@ -43,7 +44,7 @@ class WebScraper:
     def start(self):
         try:
             r = requests.get(self.root_url)
-            print("Received url_source.")
+            print("Received root_url source.")
 
             for line in r.text.splitlines():    # Iterates line by line through source_code
                 if line.__contains__("http"):
@@ -62,18 +63,19 @@ class WebScraper:
                 except TypeError:
                     if False:
                         print("No search term set.")
+            self.searched += 1
 
         except requests.exceptions.ConnectionError:
-            print("Cant connect to given url.")
+            print("Can't connect to root_url.")
 
     def scrape_loop(self):
-        while self.step < self.level:
+        while self.step < self.level and len(self.todo1) > 0:
             for url in self.todo1:
 
                 try:
-
+                    print("Requesting :", url)
                     r = requests.get(url)
-                    # print(url)
+                    line_i = 1
                     for line in r.text.splitlines():
 
                         if line.__contains__("http"):
@@ -84,19 +86,21 @@ class WebScraper:
                                     self.found_urls.append(u)
                                     # print(url)
                                     if not self.todo1.__contains__(u) and not self.todo2.__contains__(u) and \
-                                            u.__contains__(self.restrain):
-                                        self.todo2.append(u)
+                                            u.__contains__(self.restrain) and not u.__contains__(".jpg") and not u.__contains__(".jpeg") and not u.__contains__(".gif") and not \
+                                            u.__contains__(".mp3") and not u.__contains__(".mp4") and not u.__contains__(".png") and not u.__contains__(".ico") and not u.__contains__(".flv"):
+                                        self.todo2.append(u)         # TODO way more exceptions for every shit
 
                         try:
                             if line.__contains__(self.search_term) and not self.search_hits.__contains__(url):
-                                self.search_hits.append(url)
-                                if len(line) < 200:
-                                    print(line)
+                                self.search_hits.append((url, line_i))
                         except TypeError:
                             if False:
                                 print("No search term set.")
+                        line_i += 1
+                    self.searched += 1
+
                 except OSError:
-                    # print("Couldn't reach", url)
+                    print("Couldn't reach :", url)
                     self.unreachable.append(url)
                     self.found_urls.remove(url)
                 self.todo1.remove(url)
