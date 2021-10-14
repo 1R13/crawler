@@ -1,4 +1,12 @@
-WebCrawler
+ __    __    ___  ____     __  ____    ____  __    __  _        ___  ____  
+|  |__|  |  /  _]|    \   /  ]|    \  /    ||  |__|  || |      /  _]|    \ 
+|  |  |  | /  [_ |  o  ) /  / |  D  )|  o  ||  |  |  || |     /  [_ |  D  )
+|  |  |  ||    _]|     |/  /  |    / |     ||  |  |  || |___ |    _]|    / 
+|  `  '  ||   [_ |  O  /   \_ |    \ |  _  ||  `  '  ||     ||   [_ |    \ 
+ \      / |     ||     \     ||  .  \|  |  | \      / |     ||     ||  .  \
+  \_/\_/  |_____||_____|\____||__|\_||__|__|  \_/\_/  |_____||_____||__|\_|
+                                                                              
+                                                                      (WebCrawler - art by https://patorjk.com)
 
 This is a simple tool, for website crawling.
 Simple automation finds reffered urls in the source code of a given website.
