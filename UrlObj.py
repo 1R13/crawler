@@ -11,4 +11,5 @@ class Url:
 2 = scanned
 3 = unreachable
 4 = forbidden
+5 = search hit
 """

@@ -1,0 +1,27 @@
+import URL object
+
+main()
+
+	check for args
+
+		start session with args
+
+		end session with illegal args
+
+	start session with arguemtn prompts
+
+
+	after successful session print data & on error print reason
+
+end
+
+session()
+	
+	init with arguments
+
+url flags = {
+	0 = just seen
+	1 = schedueled to scan
+	2 = curled and scanned
+	3 = not reachable
+}
