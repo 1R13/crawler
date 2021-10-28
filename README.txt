@@ -36,3 +36,4 @@ Syntax  :
 -u <https://...>      : Root URL, sets the first URL for the loop           [Default: https://www.google.com]
 -r <string>           : Restrain as a string must be set to somewhat control the direction  [Default: google]
 -l <integer>          : The level sets the depth on loops that whill be performed                [Default: 2]
+-x <string>           : Exclude URLs with the given string                                    [Default: None]
