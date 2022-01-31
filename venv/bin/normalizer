@@ -1,4 +1,4 @@
-#!/home/p4rr0t/Scripts/GIT/crawler/venv/bin/python
+#!/home/p4rr0t/Scripts/crawler/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
